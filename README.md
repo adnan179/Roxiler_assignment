@@ -52,7 +52,11 @@ This project is a web application for visualizing transaction data using interac
    cd backend
    npm install
 4. **Replace the URL to connect to your mongoDB Atlas in the backend/server file**
-5. **Open up two terminals separately:**
+5. **Hit this API point to seed data to your database:**
+   ```bash
+   http://localhost:4000/initialize
+   
+6. **Open up two terminals separately:**
    ```bash
    cd frontend
    npm start
