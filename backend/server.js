@@ -9,6 +9,7 @@ const app = express();
 app.use(bodyParser.json());
 app.use(cors());
 
+//attach your own mongodb atlas url with username and password
 mongoose.connect(
   "mongodb+srv://Adnan_Roxiler:Roxiler179@cluster0.h3qloyh.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
 );
@@ -144,11 +145,14 @@ app.get("/barchart", async (req, res) => {
       },
       {
         $project: ranges.reduce((acc, { range }) => {
-          acc[range] = { $arrayElemAt: [`$${range}.count`, 0] };
+          acc[range] = {
+            $ifNull: [{ $arrayElemAt: [`$${range}.count`, 0] }, 0],
+          };
           return acc;
         }, {}),
       },
     ]);
+
     res.json(barChart[0]);
   } catch (err) {
     console.log("Error fetching bar chart data:", err);
